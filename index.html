@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Netflix Estrada</title>
+    <link rel="shortcut icon" href="img/Logo-Netflix.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/netflix.css">
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════
+         PANTALLA DE ACCESO
+    ═══════════════════════════════════════════ -->
+    <div id="pin-screen" class="pin-screen">
+        <div class="pin-container" id="pin-container">
+
+            <div class="pin-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+            </div>
+
+            <div class="pin-icon-wrap">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+
+            <h2 class="pin-title">Netflix Estrada</h2>
+            <p class="pin-subtitle">Ingresa la contraseña de acceso para continuar</p>
+
+            <!-- Formulario (estado normal) -->
+            <div class="pin-form" id="pin-form">
+                <div class="pin-input-wrapper">
+                    <i class="fas fa-lock pin-input-icon"></i>
+                    <input type="password" id="pin-input" class="pin-input"
+                           placeholder="Contraseña de acceso" autocomplete="off" spellcheck="false">
+                    <button class="pin-toggle-btn" id="pin-toggle-btn" type="button">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <div class="pin-error" id="pin-error">
+                    <i class="fas fa-times-circle"></i>
+                    <span id="pin-error-text">Contraseña incorrecta. Intenta de nuevo.</span>
+                </div>
+
+                <button class="pin-submit-btn" id="pin-submit" type="button">
+                    <i class="fas fa-unlock-alt"></i>
+                    <span>Acceder</span>
+                </button>
+            </div>
+
+            <!-- Estado bloqueado -->
+            <div class="pin-lockout" id="pin-lockout">
+                <div class="lockout-icon">
+                    <i class="fas fa-ban"></i>
+                </div>
+                <h3 class="lockout-title">Acceso Bloqueado</h3>
+                <p class="lockout-msg">Demasiados intentos fallidos.<br>Por seguridad el acceso ha sido bloqueado temporalmente.</p>
+                <div class="lockout-timer">
+                    <i class="fas fa-hourglass-half"></i>
+                    Disponible en <span id="lockout-countdown">30:00</span>
+                </div>
+
+                <!-- Desbloqueo de emergencia (solo para el administrador) -->
+                <div class="emergency-section">
+                    <button class="emergency-toggle" id="emergency-toggle" type="button">
+                        <i class="fas fa-key"></i>
+                        <span>¿Eres el administrador?</span>
+                        <i class="fas fa-chevron-down emg-chevron" id="emg-chevron"></i>
+                    </button>
+                    <div class="emergency-form" id="emergency-form">
+                        <div class="pin-input-wrapper emg-input-wrap">
+                            <i class="fas fa-shield-alt pin-input-icon"></i>
+                            <input type="password" id="emg-input" class="pin-input"
+                                   placeholder="Código de administrador" autocomplete="off" spellcheck="false">
+                            <button class="pin-toggle-btn" id="emg-vis-btn" type="button">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="pin-error" id="emg-error">
+                            <i class="fas fa-times-circle"></i>
+                            <span>Código incorrecto. Intenta de nuevo.</span>
+                        </div>
+                        <button class="emg-unlock-btn" id="emg-unlock-btn" type="button">
+                            <i class="fas fa-lock-open"></i>
+                            Desbloquear ahora
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <p class="pin-hint">
+                <i class="fas fa-info-circle"></i>
+                Solo el administrador conoce la contraseña de acceso
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         MODAL ACCESO CONCEDIDO
+    ═══════════════════════════════════════════ -->
+    <div id="access-modal" class="access-modal">
+        <div class="access-card">
+            <div class="access-icon-wrap">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2 class="access-title">Acceso Concedido</h2>
+            <p class="access-sub">Bienvenido Jampier 😊</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         VAULT PRINCIPAL
+    ═══════════════════════════════════════════ -->
+    <div class="vault-container" id="vault-container">
+        <div class="animated-bg"></div>
+
+        <div class="credentials-card">
+            <!-- Badge seguridad (top-right) -->
+            <div class="security-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>Almacenamiento Seguro</span>
+            </div>
+
+            <!-- Botón cerrar sesión (top-left) -->
+            <button class="logout-btn" id="logout-btn" type="button">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Salir</span>
+            </button>
+
+            <!-- Logo Netflix -->
+            <div class="netflix-logo-wrapper">
+                <div class="netflix-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix Logo">
+                </div>
+                <div class="logo-glow"></div>
+            </div>
+
+            <h2 class="credentials-title">
+                <i class="fas fa-key"></i>
+                Credenciales Guardadas
+            </h2>
+
+            <div class="update-info-wrapper">
+                <div class="update-info">
+                    <i class="fas fa-clock"></i>
+                    <span>Última actualización: <span id="last-updated">--/--/----</span></span>
+                </div>
+            </div>
+
+            <!-- Tarjeta correo -->
+            <div class="credential-card" data-type="email">
+                <div class="card-header">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="card-title">
+                        <h3>Correo Electrónico</h3>
+                        <span class="card-subtitle">Email registrado</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="credential-value" id="email-value"></div>
+                    <button class="action-btn" id="copy-email">
+                        <i class="far fa-copy"></i>
+                        <span>Copiar</span>
+                    </button>
+                </div>
+                <div class="card-footer">
+                    <i class="fas fa-lock"></i>
+                    <span>Información cifrada con AES-256</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta contraseña -->
+            <div class="credential-card" data-type="password">
+                <div class="card-header">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="card-title">
+                        <h3>Contraseña</h3>
+                        <span class="card-subtitle">Mantén segura tu cuenta</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="credential-value" id="password-value"></div>
+                    <div class="action-group">
+                        <button class="action-btn toggle-btn" id="toggle-password">
+                            <i class="fas fa-eye"></i>
+                            <span>Mostrar</span>
+                        </button>
+                        <button class="action-btn" id="copy-password">
+                            <i class="far fa-copy"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Barra cuenta regresiva -->
+                <div class="timer-bar" id="timer-bar">
+                    <div class="timer-bar-track">
+                        <div class="timer-bar-fill" id="timer-bar-fill"></div>
+                    </div>
+                    <div class="timer-bar-label">
+                        <i class="fas fa-clock"></i>
+                        <span>Se ocultará en</span>
+                        <span class="timer-bar-text" id="timer-bar-text">20s</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Cifrada con AES-256-GCM · Auto-ocultado en 20s</span>
+                </div>
+            </div>
+
+            <!-- Consejos de seguridad -->
+            <div class="security-tips">
+                <div class="tips-header">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Consejos de seguridad</span>
+                </div>
+                <ul class="tips-list">
+                    <li><i class="fas fa-check-circle"></i> Nunca compartas tus credenciales con nadie</li>
+                    <li><i class="fas fa-check-circle"></i> Cambia tu contraseña regularmente</li>
+                    <li><i class="fas fa-check-circle"></i> Activa la verificación en dos pasos</li>
+                    <li><i class="fas fa-check-circle"></i> Cierra sesión en dispositivos que no uses</li>
+                </ul>
+            </div>
+
+            <div class="watermark">
+                <i class="fas fa-database"></i>
+                Credenciales cifradas localmente · Solo uso personal
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast-notification" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message"></span>
+    </div>
+
+    <!-- Modal de contraseña ocultada -->
+    <div id="custom-modal" class="custom-modal"></div>
+
+    <script src="js/Netflix.js"></script>
+</body>
+</html>
